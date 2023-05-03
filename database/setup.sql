@@ -1,6 +1,8 @@
+DROP TABLE IF EXISTS users_games;
+DROP TABLE IF EXISTS users_achievements;
+DROP TABLE IF EXISTS achievements;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS games;
-DROP TABLE IF EXISTS achievements;
 
 CREATE TABLE users (
     user_id INT GENERATED ALWAYS AS IDENTITY,
@@ -12,20 +14,31 @@ CREATE TABLE users (
 );
 
 CREATE TABLE games (
-    instance_id INT GENERATED ALWAYS AS IDENTITY,
+    app_id INT GENERATED ALWAYS AS IDENTITY,
     game_name VARCHAR(255) NOT NULL,
-    playtime VARCHAR(255) NOT NULL,
-    app_id INT NOT NULL,
-    user_id INT NOT NULL,
-    PRIMARY KEY (instance_id)
+    PRIMARY KEY (app_id)
 );
 
 CREATE TABLE achievements (
-    instance_id INT GENERATED ALWAYS AS IDENTITY,
+    achievement_id INT GENERATED ALWAYS AS IDENTITY,
     achievement_name VARCHAR(255) NOT NULL,
     description VARCHAR(255) NOT NULL,
     icon VARCHAR(255) NOT NULL,
     app_id INT NOT NULL,
+    PRIMARY KEY (achievement_id),
+    FOREIGN KEY (app_id) REFERENCES games (app_id)
+);
+
+CREATE TABLE users_games (
     user_id INT NOT NULL,
-    PRIMARY KEY (instance_id)
+    app_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users (user_id),
+    FOREIGN KEY (app_id) REFERENCES games (app_id)
+);
+
+CREATE TABLE users_achievements (
+    user_id INT NOT NULL,
+    achievement_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users (user_id),
+    FOREIGN KEY (achievement_id) REFERENCES achievements (achievement_id)
 );
