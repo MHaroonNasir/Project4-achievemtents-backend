@@ -2,7 +2,7 @@
   "name": "achievment-project42",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "dev": "nodemon -L app.js",
     "setup-db": "node ./database/setup-db.js",

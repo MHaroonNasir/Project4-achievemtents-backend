@@ -13,11 +13,12 @@ CREATE TABLE users (
 
 CREATE TABLE games (
     instance_id INT GENERATED ALWAYS AS IDENTITY,
-    game_name VARCHAR(255) NOT NULL,
-    playtime VARCHAR(255) NOT NULL,
     app_id INT NOT NULL,
+    game_name VARCHAR(255) NOT NULL,
+    playtime INT NOT NULL,
     user_id INT NOT NULL,
-    PRIMARY KEY (instance_id)
+    PRIMARY KEY (instance_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE achievements (
