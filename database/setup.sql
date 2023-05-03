@@ -32,6 +32,7 @@ CREATE TABLE achievements (
 CREATE TABLE users_games (
     user_id INT NOT NULL,
     app_id INT NOT NULL,
+    playtime INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (user_id),
     FOREIGN KEY (app_id) REFERENCES games (app_id)
 );
