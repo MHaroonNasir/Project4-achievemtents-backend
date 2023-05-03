@@ -8,7 +8,7 @@ const port = process.env.PORT;
 app.use(cors());
 app.use(express.json());
 
-app.use('/', indexRouter);
+
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}.`)
