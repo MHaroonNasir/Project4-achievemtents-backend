@@ -1,0 +1,37 @@
+{
+  "name": "achievment-project42",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon -L app.js",
+    "setup-db": "node ./database/setup-db.js",
+    "test": "jest --coverage",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MHaroonNasir/achievemtents-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MHaroonNasir/achievemtents-backend/issues"
+  },
+  "homepage": "https://github.com/MHaroonNasir/achievemtents-backend#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jest": "^29.5.0",
+    "pg": "^8.10.0",
+    "supertest": "^6.3.3",
+    "uuid": "^9.0.0",
+    "uuidv4": "^6.2.13"
+  }
+}
