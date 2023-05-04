@@ -18,7 +18,9 @@ CREATE TABLE users (
 CREATE TABLE games (
     app_id INT GENERATED ALWAYS AS IDENTITY,
     game_name VARCHAR(255) NOT NULL,
-    PRIMARY KEY (app_id)
+    user_id INT NOT NULL,
+    PRIMARY KEY (app_id),
+    FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
 
@@ -28,22 +30,8 @@ CREATE TABLE achievements (
     description VARCHAR(255) NOT NULL,
     icon VARCHAR(255) NOT NULL,
     app_id INT NOT NULL,
+    user_id INT NOT NULL,
     PRIMARY KEY (achievement_id),
-    FOREIGN KEY (app_id) REFERENCES games (app_id)
-);
-
-
-CREATE TABLE users_games (
-    user_id INT NOT NULL,
-    app_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users (user_id),
-    FOREIGN KEY (app_id) REFERENCES games (app_id)
-);
-
-
-CREATE TABLE users_achievements (
-    user_id INT NOT NULL,
-    achievement_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users (user_id),
-    FOREIGN KEY (achievement_id) REFERENCES achievements (achievement_id)
+    FOREIGN KEY (app_id) REFERENCES games (app_id),
+    FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
