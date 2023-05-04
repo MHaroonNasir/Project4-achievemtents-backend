@@ -1,4 +1,4 @@
-const Games = require('../models/Game');
+const Games = require('../models/Game.js');
 
   async function show(req, res) {
     try {
@@ -9,7 +9,7 @@ const Games = require('../models/Game');
       res.status(400).json({ error: err.message });
     }
   }
-  
+
   async function create(req, res) {
     try {
         const data = req.body;
@@ -19,5 +19,5 @@ const Games = require('../models/Game');
         res.status(400).json({"error": err.message});
     }
   }
-  
+
   module.exports = { show, create };
