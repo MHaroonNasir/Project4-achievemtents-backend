@@ -16,7 +16,8 @@ CREATE TABLE users (
 
 
 CREATE TABLE games (
-    app_id INT GENERATED ALWAYS AS IDENTITY,
+    instance_id INT GENERATED ALWAYS AS IDENTITY,
+    app_id INT NOT NULL,
     game_name VARCHAR(255) NOT NULL,
     playtime INT NOT NULL,
     user_id INT NOT NULL,
