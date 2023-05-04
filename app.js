@@ -6,9 +6,8 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const store = new session.MemoryStore();
 
-const usersRoute = require("./routers/userRouter.js");
-const gamesRouter = require('./routers/gamesRouter');
-const userGamesRouter = require('./routers/userGamesRouter');
+const usersRoute = require("./routers/usersRouter.js");
+const gamesRouter = require("./routers/gamesRouter.js");
 
 // globals
 const port = process.env.PORT;
@@ -55,10 +54,9 @@ app.get("/", (req, res) => {
   res.status(200).json("Welcome to the SteamAchiev API!");
 });
 
-// users route
+// routes
 app.use("/users", usersRoute);
-app.use('/game', gamesRouter);
-app.use('/usergame', userGamesRouter);
+app.use('/games', gamesRouter);
 
 // starting server on port
 app.listen(port, () => {
