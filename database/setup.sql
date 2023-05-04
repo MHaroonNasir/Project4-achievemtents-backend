@@ -18,6 +18,7 @@ CREATE TABLE users (
 CREATE TABLE games (
     app_id INT GENERATED ALWAYS AS IDENTITY,
     game_name VARCHAR(255) NOT NULL,
+    playtime INT NOT NULL,
     user_id INT NOT NULL,
     PRIMARY KEY (app_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id)
