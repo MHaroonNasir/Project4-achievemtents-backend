@@ -5,7 +5,10 @@ const cors = require("cors");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const store = new session.MemoryStore();
+
 const usersRoute = require("./routers/userRouter.js");
+const gamesRouter = require('./routers/gamesRouter');
+const userGamesRouter = require('./routers/userGamesRouter');
 
 // globals
 const port = process.env.PORT;
@@ -54,6 +57,8 @@ app.get("/", (req, res) => {
 
 // users route
 app.use("/users", usersRoute);
+app.use('/game', gamesRouter);
+app.use('/usergame', userGamesRouter);
 
 // starting server on port
 app.listen(port, () => {
