@@ -17,27 +17,13 @@ const oneDay = 1000 * 60 * 60 * 24;
 const app = express();
 
 // middlewares
-app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
-
 
 app.use((req, res, next) => {
   console.log(req.method, req.path);
   next();
 });
-
-
-app.use(
-    session({
-      secret: process.env.SECRET,
-      saveUninitialized: false,
-      resave: false,
-      cookie: { maxAge: oneDay, sameSite: false },
-      store,
-    })
-  );
-
 
 app.use(
   cors({
@@ -48,6 +34,15 @@ app.use(
   })
 );
 
+app.use(
+    session({
+      secret: process.env.SECRET,
+      saveUninitialized: false,
+      resave: false,
+      cookie: { maxAge: oneDay, sameSite: false },
+      store,
+    })
+  );
 
 // root
 app.get("/", (req, res) => {
