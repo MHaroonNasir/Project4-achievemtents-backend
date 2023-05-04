@@ -3,7 +3,7 @@ const Games = require('../models/Game.js');
   async function show(req, res) {
     try {
       const gameId = req.params.id;
-      const result = await Games.getById(gameId);
+      const result = await Games.getAllGamesForUser(gameId);
       res.status(200).send(result);
     } catch (err) {
       res.status(400).json({ error: err.message });
