@@ -8,7 +8,7 @@ const {
     displayCurrentUser,
     destroyUser,
     displayUser,
-} = require("../controllers/userController.js");
+} = require("../controllers/usersController.js");
 
 // initialising router
 const router = Router();
