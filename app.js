@@ -2,7 +2,9 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const db = require("./database/connect.js");
 const session = require("express-session");
+const pgSession = require("connect-pg-simple")(session);
 const cookieParser = require("cookie-parser");
 const store = new session.MemoryStore();
 
@@ -42,7 +44,10 @@ app.use(
       saveUninitialized: false,
       resave: false,
       cookie: { maxAge: oneDay, sameSite: false },
-      store,
+      store: new pgSession({
+        pool: db,
+        tableName: "user_sessions"
+      })
     })
   );
 

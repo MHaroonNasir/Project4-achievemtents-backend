@@ -100,10 +100,7 @@ async function loginUser(req, res) {
 // function to logout the user
 async function logoutUser(req, res) {
   console.log(`User with username: ${req.session.username} just logged out!`);
-  req.session.userid = null;
-  req.session.username = null;
-  req.session.steam_id = null;
-  req.session.currency = null;
+  req.session = null;
   res.status(200).json({message: "Successfully logged out!"});
 }
 
