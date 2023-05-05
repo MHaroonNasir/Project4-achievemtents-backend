@@ -8,7 +8,8 @@ const store = new session.MemoryStore();
 
 const usersRoute = require("./routers/usersRouter.js");
 const gamesRouter = require("./routers/gamesRouter.js");
-const achievementsRouter = require("./routers/achievementsRouter.js")
+const achievementsRouter = require("./routers/achievementsRouter.js");
+const steamRouter = require("./routers/steamRouter.js");
 
 // globals
 const port = process.env.PORT;
@@ -54,6 +55,7 @@ app.get("/", (req, res) => {
 app.use("/users", usersRoute);
 app.use('/games', gamesRouter);
 app.use('/achievements', achievementsRouter);
+app.use('/steam', steamRouter);
 
 // starting server on port
 app.listen(port, () => {
