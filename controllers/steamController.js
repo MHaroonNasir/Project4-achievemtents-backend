@@ -21,7 +21,7 @@ async function getAllAchievements(req, res) {
     try {
         const appId = req.body.app_id;
         const userId = req.body.user_id;
-        const getOwnedAchievements = await fetch(`http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=${appId}&key=${steamWebApiKey}&steamid=${userId}`);
+        const getOwnedAchievements = await fetch(`https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=${appId}&key=${steamWebApiKey}&steamid=${userId}`);
         const ownedAchievementsData = await getOwnedAchievements.json();
         //console.log(ownedAchievementsData)
         res.status(200).send(ownedAchievementsData);
