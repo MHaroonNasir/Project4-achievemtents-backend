@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS user_sessions;
 DROP TABLE IF EXISTS achievements;
 DROP TABLE IF EXISTS games;
 DROP TABLE IF EXISTS users;
@@ -35,3 +36,13 @@ CREATE TABLE achievements (
     FOREIGN KEY (app_id) REFERENCES games (app_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
+
+
+CREATE TABLE user_sessions (
+  sid varchar NOT NULL COLLATE "default",
+  sess json NOT NULL,
+  expire timestamp(6) NOT NULL
+)
+WITH (OIDS=FALSE);
+ALTER TABLE "user_sessions" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+CREATE INDEX "IDX_session_expire" ON "user_sessions" ("expire");

@@ -2,7 +2,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/User.js");
 
-
 // function to display the user currently logged in
 async function displayCurrentUser(req, res) {
   const user = await User.getUserById(req.session.userid);
@@ -16,10 +15,9 @@ async function displayCurrentUser(req, res) {
     };
     res.status(200).json(sendUser);
   } else {
-    res.status(404).json({error: "No user with that id found!"});
+    res.status(404).json({ error: "No user with that id found!" });
   }
 }
-
 
 // function to display a user depending on the id in the url
 async function displayUser(req, res) {
@@ -34,10 +32,9 @@ async function displayUser(req, res) {
     };
     res.status(200).json(sendUser);
   } else {
-    res.status(404).json({error: "No user with that id found!"});
+    res.status(404).json({ error: "No user with that id found!" });
   }
 }
-
 
 // function to register the user
 async function registerUser(req, res) {
@@ -47,7 +44,11 @@ async function registerUser(req, res) {
   const userExists = await User.getUserByUsername(username);
 
   if (userExists) {
-    return res.status(400).json({error: "User with that email already exists. Please choose another."});
+    return res
+      .status(400)
+      .json({
+        error: "User with that email already exists. Please choose another.",
+      });
   } else {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = {
@@ -61,17 +62,22 @@ async function registerUser(req, res) {
   }
 }
 
-
 // function to login the user
 async function loginUser(req, res) {
   const { username, password } = req.body;
+
+  // if user is already logged in, return error message
+  if (req.session.userid) {
+    res.status(400).json({ error: "User already logged in!" });
+    return;
+  }
 
   try {
     // check if user with the specified email exists, if not send an error message
     const user = await User.getUserByUsername(username);
 
     if (!user) {
-      res.status(404).json({error: "No user registered with that email!"});
+      res.status(404).json({ error: "No user registered with that username!" });
       return;
     }
 
@@ -79,47 +85,45 @@ async function loginUser(req, res) {
     const passwordCheck = await bcrypt.compare(password, user.password);
 
     if (!passwordCheck) {
-      res.status(400).json({error: "Incorrect password!"});
+      res.status(400).json({ error: "Incorrect password!" });
       return;
     } else {
       req.session.userid = user.user_id;
       req.session.username = user.username;
       req.session.steam_id = user.steam_id;
-      req.session.currency = user.currency;
       res.status(200).json(req.session);
       console.log(
         `User with username: ${req.session.username} just logged in!`
       );
     }
   } catch (err) {
-    return res.status(400).json({error: err.message});
+    return res.status(400).json({ error: err.message });
   }
 }
-
 
 // function to logout the user
 async function logoutUser(req, res) {
   console.log(`User with username: ${req.session.username} just logged out!`);
-  req.session.userid = null;
-  req.session.username = null;
-  req.session.steam_id = null;
-  req.session.currency = null;
-  res.status(200).json({message: "Successfully logged out!"});
+  req.session.destroy();
+  res.status(200).json({ message: "Successfully logged out!" });
 }
-
 
 // function to delete a user
 async function destroyUser(req, res) {
   const user = await User.getUserById(req.session.userid);
 
   const deletedUser = await user.destroy();
-  req.session.userid = null;
-  req.session.username = null;
-  req.session.steam_id = null;
-  req.session.currency = null;
+  req.session.destroy();
   res.status(200).json(deletedUser);
 }
 
+async function updateUserCurrency(req, res) {
+  const { newCurrency } = req.body;
+  const user = await User.getUserById(req.session.userid);
+
+  const updatedUser = await user.updateCurrency(newCurrency);
+  res.status(200).json(updatedUser);
+}
 
 module.exports = {
   displayCurrentUser,
@@ -128,4 +132,5 @@ module.exports = {
   loginUser,
   logoutUser,
   destroyUser,
+  updateUserCurrency,
 };

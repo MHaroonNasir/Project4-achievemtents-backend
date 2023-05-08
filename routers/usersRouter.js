@@ -8,6 +8,7 @@ const {
     displayCurrentUser,
     destroyUser,
     displayUser,
+    updateUserCurrency,
 } = require("../controllers/usersController.js");
 
 // initialising router
@@ -19,6 +20,7 @@ router.post("/login", loginUser);
 router.get("/logout", auth, logoutUser);
 router.get("/current", auth, displayCurrentUser);
 router.delete("/delete", auth, destroyUser);
+router.patch("/updatecurrency", auth, updateUserCurrency);
 router.get("/:id", displayUser);
 
 

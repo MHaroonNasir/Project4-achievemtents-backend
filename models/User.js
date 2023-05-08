@@ -1,7 +1,6 @@
 // imports
 const db = require("../database/connect.js");
 
-
 // user class model, constructor takes the user object returned by database
 class User {
   constructor(user) {
@@ -60,7 +59,15 @@ class User {
     );
     return new User(result.rows[0]);
   }
-}
 
+  // function to update the currency of the currently logged in user with a new amount passed in by the request body
+  async updateCurrency(newCurrency) {
+    const result = await db.query(
+      "UPDATE users SET currency = $1 WHERE user_id = $2 RETURNING *;",
+      [newCurrency, this.user_id]
+    );
+    return new User(result.rows[0]);
+  }
+}
 
 module.exports = User;

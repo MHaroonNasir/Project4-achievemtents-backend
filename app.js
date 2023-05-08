@@ -2,9 +2,10 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const db = require("./database/connect.js");
 const session = require("express-session");
+const pgSession = require("connect-pg-simple")(session);
 const cookieParser = require("cookie-parser");
-const store = new session.MemoryStore();
 
 const usersRoute = require("./routers/usersRouter.js");
 const gamesRouter = require("./routers/gamesRouter.js");
@@ -22,11 +23,13 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
+// log routes and their methods that are called
 app.use((req, res, next) => {
   console.log(req.method, req.path);
   next();
 });
 
+// bypass CORS
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -36,15 +39,26 @@ app.use(
   })
 );
 
-app.use(
-    session({
-      secret: process.env.SECRET,
-      saveUninitialized: false,
-      resave: false,
-      cookie: { maxAge: oneDay, sameSite: false },
-      store,
-    })
-  );
+// session object
+const sess = {
+  secret: process.env.SECRET,
+  saveUninitialized: false,
+  resave: false,
+  cookie: { maxAge: oneDay, sameSite: false },
+  store: new pgSession({
+    pool: db,
+    tableName: "user_sessions",
+  }),
+};
+
+// check if app is in production, if so set the cookie to secure
+if (app.get("env") === "production") {
+  app.set("trust proxy", 1); // trust first proxy
+  sess.cookie.secure = true; // serve secure cookies
+}
+
+// use the session
+app.use(session(sess));
 
 // root
 app.get("/", (req, res) => {
@@ -53,9 +67,9 @@ app.get("/", (req, res) => {
 
 // routes
 app.use("/users", usersRoute);
-app.use('/games', gamesRouter);
-app.use('/achievements', achievementsRouter);
-app.use('/steam', steamRouter);
+app.use("/games", gamesRouter);
+app.use("/achievements", achievementsRouter);
+app.use("/steam", steamRouter);
 
 // starting server on port
 app.listen(port, () => {
