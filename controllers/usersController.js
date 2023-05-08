@@ -66,12 +66,18 @@ async function registerUser(req, res) {
 async function loginUser(req, res) {
   const { username, password } = req.body;
 
+  // if user is already logged in, return error message
+  if(req.session.userid) {
+    res.status(400).json({error: "User already logged in!"});
+    return;
+  }
+
   try {
     // check if user with the specified email exists, if not send an error message
     const user = await User.getUserByUsername(username);
 
     if (!user) {
-      res.status(404).json({error: "No user registered with that email!"});
+      res.status(404).json({error: "No user registered with that username!"});
       return;
     }
 
@@ -85,7 +91,6 @@ async function loginUser(req, res) {
       req.session.userid = user.user_id;
       req.session.username = user.username;
       req.session.steam_id = user.steam_id;
-      req.session.currency = user.currency;
       res.status(200).json(req.session);
       console.log(
         `User with username: ${req.session.username} just logged in!`
@@ -100,7 +105,7 @@ async function loginUser(req, res) {
 // function to logout the user
 async function logoutUser(req, res) {
   console.log(`User with username: ${req.session.username} just logged out!`);
-  req.session = null;
+  req.session.destroy();
   res.status(200).json({message: "Successfully logged out!"});
 }
 
@@ -110,11 +115,16 @@ async function destroyUser(req, res) {
   const user = await User.getUserById(req.session.userid);
 
   const deletedUser = await user.destroy();
-  req.session.userid = null;
-  req.session.username = null;
-  req.session.steam_id = null;
-  req.session.currency = null;
+  req.session.destroy();
   res.status(200).json(deletedUser);
+}
+
+async function updateUserCurrency(req, res) {
+  const { newCurrency } = req.body;
+  const user = await User.getUserById(req.session.userid);
+
+  const updatedUser = await user.updateCurrency(newCurrency);
+  res.status(200).json(updatedUser);
 }
 
 
@@ -125,4 +135,5 @@ module.exports = {
   loginUser,
   logoutUser,
   destroyUser,
+  updateUserCurrency,
 };
