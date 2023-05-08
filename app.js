@@ -47,14 +47,14 @@ const sess = {
   cookie: { maxAge: oneDay, sameSite: false },
   store: new pgSession({
     pool: db,
-    tableName: "user_sessions"
-  })
-}
+    tableName: "user_sessions",
+  }),
+};
 
 // check if app is in production, if so set the cookie to secure
-if (app.get('env') === 'production') {
-  app.set('trust proxy', 1) // trust first proxy
-  sess.cookie.secure = true // serve secure cookies
+if (app.get("env") === "production") {
+  app.set("trust proxy", 1); // trust first proxy
+  sess.cookie.secure = true; // serve secure cookies
 }
 
 // use the session
@@ -67,9 +67,9 @@ app.get("/", (req, res) => {
 
 // routes
 app.use("/users", usersRoute);
-app.use('/games', gamesRouter);
-app.use('/achievements', achievementsRouter);
-app.use('/steam', steamRouter);
+app.use("/games", gamesRouter);
+app.use("/achievements", achievementsRouter);
+app.use("/steam", steamRouter);
 
 // starting server on port
 app.listen(port, () => {

@@ -1,7 +1,6 @@
 // imports
 const db = require("../database/connect.js");
 
-
 // user class model, constructor takes the user object returned by database
 class User {
   constructor(user) {
@@ -70,6 +69,5 @@ class User {
     return new User(result.rows[0]);
   }
 }
-
 
 module.exports = User;
