@@ -19,10 +19,10 @@ class Games {
     };
 
     static async create(data) {
-        const {app_id, game_name, playtime, user_id} = data;
+        const {app_id, game_name, playtime, user_id, game_description, genres, background_image} = data;
         const response = await db.query(
-            "INSERT INTO games (app_id, game_name, playtime, user_id) VALUES ($1, $2, $3, $4) RETURNING *;",
-            [app_id, game_name, playtime, user_id]
+            "INSERT INTO games (app_id, game_name, playtime, user_id, game_description, genres, background_image) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;",
+            [app_id, game_name, playtime, user_id, game_description, genres, background_image]
         );
         //const newId = response.rows[0].user_id;
         //const newUser = await User.getOneById(newId);

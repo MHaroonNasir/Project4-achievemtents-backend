@@ -9,6 +9,7 @@ async function displayCurrentUser(req, res) {
   if (user) {
     const { steam_id, username, currency } = user;
     const sendUser = {
+      user_id: req.session.userid,
       steam_id,
       username,
       currency,
