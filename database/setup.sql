@@ -20,6 +20,9 @@ CREATE TABLE games (
     game_name VARCHAR(255) NOT NULL,
     playtime INT NOT NULL,
     user_id INT NOT NULL,
+    game_description VARCHAR(2550) NOT NULL,
+    genres json[] NOT NULL,
+    background_image VARCHAR(255) NOT NULL,
     PRIMARY KEY (app_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
