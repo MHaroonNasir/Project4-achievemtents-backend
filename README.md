@@ -14,11 +14,12 @@
 ## Routes
 ### User routes  /users
 
-| Route       | METHOD      | Description                                                                                                                 |
-| ----------- | ----------- | --------------------------------------------------------------------------------------------------------------------------- |
-| /register   | POST        | registers a new user into the database, returns a JSON object of the created user or an error                               |
-| /login      | POST        | logs in the user if they provide correct details and creates a new session, returns the session object or an error          |
-| /logout     | GET         | logs out the current user , returns a JSON object with a message                                                            |
-| /current    | GET         | gets the logged in users details and returns the username, steam_id and currency as a JSON object                           |
-| /:id        | GET         | gets the users details with the specified id and returns the username, steam_id and currency as a JSON object or an error   |
-| /delete     | DELETE      | deletes the current logged in user from the database and returns the deleted user as a JSON object                          |
+| Route           | METHOD      | Description                                                                                                                 |
+| --------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------- |
+| /register       | POST        | registers a new user into the database, returns a JSON object of the created user or an error                               |
+| /login          | POST        | logs in the user if they provide correct details and creates a new session, returns the session object or an error          |
+| /logout         | GET         | logs out the current user , returns a JSON object with a message                                                            |
+| /current        | GET         | gets the logged in users details and returns the username, steam_id and currency as a JSON object                           |
+| /:id            | GET         | gets the users details with the specified id and returns the username, steam_id and currency as a JSON object or an error   |
+| /delete         | DELETE      | deletes the current logged in user from the database and returns the deleted user as a JSON object                          |
+| /updatecurrency | PATCH       | updates the currency of the logged in user with a new value, returns the user as a JSON object                              |
