@@ -23,3 +23,11 @@
 | /:id            | GET         | gets the users details with the specified id and returns the username, steam_id and currency as a JSON object or an error   |
 | /delete         | DELETE      | deletes the current logged in user from the database and returns the deleted user as a JSON object                          |
 | /updatecurrency | PATCH       | updates the currency of the logged in user with a new value, returns the user as a JSON object                              |
+
+### Item routes  /items
+
+| Route           | METHOD      | Description                                                                                                                 |
+| --------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------- |
+| /               | GET         | returns an array of objects containing the details of all items in the store                                                |
+| /:id            | GET         | returns an object containing the details of an item of specified id in the store                                            |
+| /:id            | PATCH       | initiates a purchase of a specific item by a specific user, deducts users currency and items quantity                       |
