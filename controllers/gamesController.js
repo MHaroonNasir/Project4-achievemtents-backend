@@ -3,10 +3,23 @@ const Games = require('../models/Game.js');
   async function show(req, res) {
     try {
       const gameId = req.params.id;
+      console.log(gameId)
       const result = await Games.getAllGamesForUser(gameId);
       res.status(200).send(result);
     } catch (err) {
       res.status(400).json({ error: err.message });
+    }
+  }
+
+  async function showSpecific(req, res) {
+    try {
+        const user_id = req.body.user_id;
+        const app_id = req.body.app_id;
+        console.log(user_id, app_id)
+        const achievements = await Games.getSpecificGameForUser(user_id, app_id);
+        res.status(201).json(achievements);
+    } catch(err) {
+        res.status(400).json({"error": err.message});
     }
   }
 
@@ -20,4 +33,4 @@ const Games = require('../models/Game.js');
     }
   }
 
-  module.exports = { show, create };
+  module.exports = { show, showSpecific, create };
