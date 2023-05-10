@@ -19,14 +19,13 @@ class Achievements {
         return new Achievements(response.rows[0]);
     };
 
-    static async getSpecificAchievementsForUser(data) {
-        const {user_id, app_id} = data;
-        const response = await db.query("SELECT * from achievements WHERE user_id = $1 AND app_id =$2",
+    static async getAllAchievementsForSpecificGame(user_id, app_id) {
+        const response = await db.query("SELECT * from achievements WHERE user_id = $1 AND app_id = $2",
         [user_id, app_id]);
-        if (response.rows.length != 1) {
-            throw new Error("Cannot find a game(s) with that User ID.");
+        if (response.rows.length < 1) {
+            throw new Error("Cannot find achievements for that game.");
         }
-        return new Achievements(response.rows[0]);
+        return response.rows.map((a) => new Achievements(a));
     };
 
     static async create(data) {
