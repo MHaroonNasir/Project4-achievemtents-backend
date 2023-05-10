@@ -1,21 +1,24 @@
 const db = require("../database/connect");
 
 class Games {
-    constructor({ instance_id, app_id, game_name, playtime, user_id}) {
+    constructor({ instance_id, app_id, game_name, playtime, user_id, game_description, genres, background_image}) {
         this.instance_id = instance_id;
         this.app_id = app_id;
         this.game_name = game_name;
         this.playtime = playtime;
         this.user_id = user_id;
+        this.game_description = game_description;
+        this.genres = genres;
+        this.background_image = background_image;
     }
 
     static async getAllGamesForUser(id) {
         const response = await db.query("SELECT * from games WHERE user_id = $1",
         [id]);
-        if (response.rows.length != 1) {
+        if (response.rows.length < 1) {
             throw new Error("Cannot find a game(s) with that User ID.");
         }
-        return new Games(response.rows[0]);
+        return response.rows.map((g) => new Games(g));
     };
 
     static async create(data) {
