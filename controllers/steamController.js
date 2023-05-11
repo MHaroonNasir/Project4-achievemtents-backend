@@ -43,4 +43,15 @@ async function getMoreAchievementInfo(req, res) {
     }
 }
 
-module.exports = { getAllGames, getAllAchievements, getMoreAchievementInfo };
+async function getRecentlyPlayedGames(req, res) {
+    try {
+        const steamId = req.params.id;
+        const getRecent = await fetch(`http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${steamWebApiKey}&steamid=${steamId}&format=json`);
+        const recentGames = await getRecent.json();
+        res.status(200).send(recentGames);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+}
+
+module.exports = { getAllGames, getAllAchievements, getMoreAchievementInfo, getRecentlyPlayedGames };
