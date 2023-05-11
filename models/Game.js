@@ -21,6 +21,15 @@ class Games {
         return response.rows.map((g) => new Games(g));
     };
 
+    static async getSpecificGameForUser(user_id, app_id) {
+        const response = await db.query("SELECT * from games WHERE user_id = $1 AND app_id = $2",
+        [user_id, app_id]);
+        if (response.rows.length < 1) {
+            throw new Error("Cannot find a game(s) with that User ID.");
+        }
+        return new Games(response.rows[0]); 
+    };
+
     static async create(data) {
         const {app_id, game_name, playtime, user_id, game_description, genres, background_image} = data;
         const response = await db.query(

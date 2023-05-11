@@ -19,10 +19,10 @@ async function getAllGames(req, res) {
 
 async function getAllAchievements(req, res) {
     try {
-        console.log("called")
+        //console.log("called")
         const appId = req.query.appid;
         const steamId = req.query.steamid;
-        console.log(appId, steamId)
+        //console.log(appId, steamId)
         const getOwnedAchievements = await fetch(`https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=${appId}&key=${steamWebApiKey}&steamid=${steamId}`);
         const ownedAchievementsData = await getOwnedAchievements.json();
         //console.log(ownedAchievementsData)
@@ -32,4 +32,15 @@ async function getAllAchievements(req, res) {
     }
 }
 
-module.exports = { getAllGames, getAllAchievements };
+async function getMoreAchievementInfo(req, res) {
+    try {
+        const appId = req.params.id;
+        const getOwnedAchievements = await fetch(`http://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v0002/?key=${steamWebApiKey}&appid=${appId}&l=english&format=json`);
+        const ownedAchievementsData = await getOwnedAchievements.json();
+        res.status(200).send(ownedAchievementsData);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+}
+
+module.exports = { getAllGames, getAllAchievements, getMoreAchievementInfo };

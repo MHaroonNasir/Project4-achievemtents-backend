@@ -12,8 +12,10 @@ const Achievements = require('../models/Achievement');
 
   async function showSpecific(req, res) {
     try {
-        const data = req.body;
-        const achievements = await Achievements.getSpecificAchievementsForUser(data);
+        const user_id = req.body.user_id;
+        const app_id = req.body.app_id;
+        console.log(user_id, app_id)
+        const achievements = await Achievements.getAllAchievementsForSpecificGame(user_id, app_id);
         res.status(201).json(achievements);
     } catch(err) {
         res.status(400).json({"error": err.message});
