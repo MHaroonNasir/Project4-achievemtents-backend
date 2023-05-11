@@ -10,7 +10,7 @@ CREATE TABLE users (
     steam_id VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    currency INT DEFAULT 0,
+    currency INT DEFAULT 100000,
     PRIMARY KEY (user_id)
 );
 

@@ -63,7 +63,7 @@ class User {
   // function to update the currency of the currently logged in user with a new amount passed in by the request body
   async updateCurrency(newCurrency) {
     const result = await db.query(
-      "UPDATE users SET currency = $1 WHERE user_id = $2 RETURNING *;",
+      "UPDATE users SET currency = currency + $1 WHERE user_id = $2 RETURNING *;",
       [newCurrency, this.user_id]
     );
     return new User(result.rows[0]);

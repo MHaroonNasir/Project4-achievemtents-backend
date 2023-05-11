@@ -32,11 +32,13 @@ async function purchaseItem(req, res) {
         return;
     }
 
+    console.log(user.currency)
     if(user.currency >= item.price) {
-        const newCurrency = user.currency - item.price;
+        //const newCurrency = user.currency - item.price;
+        //console.log(newCurrency)
         const newQuantity = item.quantity - 1;
 
-        const updatedUser = await user.updateCurrency(newCurrency);
+        const updatedUser = await user.updateCurrency(-item.price);
         const updatedItem = await item.buyItem(newQuantity);
 
         res.status(200).json({user: updatedUser, item: updatedItem});
