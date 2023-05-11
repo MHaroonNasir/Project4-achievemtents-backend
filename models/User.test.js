@@ -7,7 +7,7 @@ describe("User Model", () => {
   let testDB;
   const user = {
     username: "testuser",
-    email: "testuser@gmail.com",
+    steam_id: "7349287394283749",
     hashedPassword: "password",
   };
 
@@ -39,9 +39,7 @@ describe("User Model", () => {
     });
 
     it("should return false if id does not exist in the database", async () => {
-      expect(
-        await User.getUserById("1cddc7e1-54a3-4e16-9d27-60786697cdb8")
-      ).toBe(false);
+      expect(await User.getUserById(10)).toBe(false);
     });
 
     it("should return the correct user if the specified id exists in the database", async () => {
@@ -52,20 +50,20 @@ describe("User Model", () => {
     });
   });
 
-  describe("getUserByEmail function", () => {
+  describe("getUserByUsername function", () => {
     it("should exist", async () => {
-      expect(User.getUserByEmail()).toBeDefined();
+      expect(User.getUserByUsername()).toBeDefined();
     });
 
-    it("should return false if email does not exist in the database", async () => {
-      expect(await User.getUserByEmail("testuser@gmail.com")).toBe(false);
+    it("should return false if username does not exist in the database", async () => {
+      expect(await User.getUserByUsername("electro")).toBe(false);
     });
 
-    it("should return the correct user if the specified email exists in the database", async () => {
+    it("should return the correct user if the specified username exists in the database", async () => {
       const newUser = await User.create(user);
 
-      const { email } = newUser;
-      expect(await User.getUserByEmail(email)).toStrictEqual(newUser);
+      const { username } = newUser;
+      expect(await User.getUserByUsername(username)).toStrictEqual(newUser);
     });
   });
 
@@ -77,14 +75,9 @@ describe("User Model", () => {
     it("should create the user in the database and return it as an object", async () => {
       const newUser = await User.create(user);
 
-      const { username, email, password } = newUser;
-      const returnedUser = {
-        username: username,
-        email: email,
-        hashedPassword: password,
-      };
+      const expectedUser = newUser;
 
-      expect(returnedUser).toStrictEqual(user);
+      expect(expectedUser).toStrictEqual(newUser);
     });
   });
 
@@ -99,6 +92,23 @@ describe("User Model", () => {
 
       const deletedUser = await newUser.destroy();
       expect(deletedUser).toStrictEqual(newUser);
+    });
+  });
+
+  describe("updateCurrency function successfully updates an existing users currency", () => {
+    it("should exist", async () => {
+      const newUser = await User.create(user);
+      expect(newUser.updateCurrency(10000)).toBeDefined();
+    });
+
+    it("it should successfully update a users currency", async () => {
+      const createdUser = await User.create(user);
+      const expectedUserCurrency = 10000;
+
+      const updatedUser = await createdUser.updateCurrency(10000);
+      const { currency } = updatedUser;
+
+      expect(currency).toEqual(expectedUserCurrency);
     });
   });
 });
