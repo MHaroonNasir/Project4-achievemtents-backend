@@ -10,7 +10,7 @@ CREATE TABLE users (
     steam_id VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    currency INT DEFAULT 0,
+    currency INT DEFAULT 100000,
     PRIMARY KEY (user_id)
 );
 
@@ -68,4 +68,11 @@ VALUES
     ('Steam £5 Wallet Code', 5000, 'https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/clans/41316928/f7f5587c77587cc8ae5eb50e39defcbcc3acaa88.jpg', 10),
     ('Steam £10 Wallet Code', 10000, 'https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/clans/41316928/f7f5587c77587cc8ae5eb50e39defcbcc3acaa88.jpg', 10),
     ('Steam £15 Wallet Code', 25000, 'https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/clans/41316928/f7f5587c77587cc8ae5eb50e39defcbcc3acaa88.jpg', 10),
-    ('Steam £25 Wallet Code', 32000, 'https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/clans/41316928/f7f5587c77587cc8ae5eb50e39defcbcc3acaa88.jpg', 10);
+    ('Steam £25 Wallet Code', 32000, 'https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/clans/41316928/f7f5587c77587cc8ae5eb50e39defcbcc3acaa88.jpg', 10),
+    ('Gingerbread House Decoration', 1200, 'https://community.cloudflare.steamstatic.com/economy/image/97c58bX8zwhvXgjKSAjB9RM9BTXPUDXeFj-L-X6MQvU1Dx_-6RPwei34n22Iv9VZjtGbVNMvq1djxjUmmVZdyIES1jtMhyc45MpC4-fP18d4OOzY62rBcGHSL6VpQLlr/360fx360f', 5),
+    ('Pace Pete Decoration', 1500, 'https://community.cloudflare.steamstatic.com/economy/image/97c58bX8zwhvXgjKSAjB9RM9BTXPUDXeFj-L-X6MQvU1Dx_-6RPwei34n22Iv9VZjtGbVNMvq1djxjUmmVZdyIES1jtfmAIj1MBP-vHC7ZQsU-bGrzyIP3mI8pNQvPQ/360fx360f', 3),
+    ('Vomitous Tots', 2000, 'https://community.cloudflare.steamstatic.com/economy/image/jsobcfQDmhizvpbTAOdHeug7O4L-U2fOLwxdx4kOevf-WAtkX9IJEJYyrFGaOwVCUw2r0E3iHmY7Iu6_MPyiXCI/360fx360f', 25),
+    ('Customer Service', 1800, 'https://community.cloudflare.steamstatic.com/economy/image/jsobcfQDmhizvpbTAOdHeug7O4L-U2fOLwxdx4kOevf-WAtkX9IJEJYyrFGaOwVCUw2r0E3iGGU7Iu6_Y-Mgmy0/360fx360f', 15),
+    ('Black Fedora', 4500, 'https://community.cloudflare.steamstatic.com/economy/image/a5HYp9Sw61Iks7TiNF57DFqTxPCXnhdgwCvwcWpEChTJEA/360fx360f', 5),
+    ('Headset (Grey)', 1000, 'https://community.cloudflare.steamstatic.com/economy/image/a5HYp9Sw61Iks7TiNF57DFqT8t-NrXZ8zivwcWrTwGn96A/360fx360f', 5)
+

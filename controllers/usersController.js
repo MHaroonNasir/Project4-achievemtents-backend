@@ -120,9 +120,11 @@ async function destroyUser(req, res) {
 
 async function updateUserCurrency(req, res) {
   const { newCurrency } = req.body;
+  console.log(newCurrency)
   const user = await User.getUserById(req.session.userid);
 
   const updatedUser = await user.updateCurrency(newCurrency);
+  console.log(updatedUser)
   res.status(200).json(updatedUser);
 }
 
